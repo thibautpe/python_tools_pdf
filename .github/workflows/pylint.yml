@@ -29,5 +29,11 @@ jobs:
         pip install pylint
         pylint merge_and_toc_pdf.py
 
-    - name: Run PDF merge script
-      run: python merge_and_toc_pdf.py
+    - name: Vérifier les fichiers de test
+      run: dir tests\data
+      
+    # - name: Run PDF merge script
+    #   run: python merge_and_toc_pdf.py
+
+    - name: Run tests
+      run: pytest

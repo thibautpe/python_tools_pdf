@@ -1,0 +1,4 @@
+[pdf]
+input_folder  = "/data"
+output_folder = "/data/out"
+output_file   = "mergedpdf.pdf"
