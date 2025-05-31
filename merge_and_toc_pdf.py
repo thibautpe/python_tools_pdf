@@ -47,14 +47,14 @@ toc_titles = [
     for f in pdf_files[1:]
 ]
 
-def generate_toc(section_start_pages):
+def generate_toc(start_pages):
     """
     Génère un sommaire PDF en mémoire avec titres et numéros de page.
-    section_start_pages : liste des pages de début de chaque section.
+    start_pages : liste des pages de début de chaque section.
     Retourne un buffer PDF.
     """
-    toc_buffer = BytesIO()
-    c = canvas.Canvas(toc_buffer, pagesize=A4)
+    toc_mem_buffer = BytesIO()
+    c = canvas.Canvas(toc_mem_buffer, pagesize=A4)
     def create_toc_header():
         c.setFont("Verdana-Bold", 18)
         c.drawString(180, 800, "Table of content")
@@ -69,13 +69,13 @@ def generate_toc(section_start_pages):
             y = create_toc_header()
             current_item = 0
         c.drawString(100, y, title)
-        page_number = section_start_pages[idx]
+        page_number = start_pages[idx]
         c.drawRightString(500, y, str(page_number))
         y -= 20
         current_item += 1
     c.save()
-    toc_buffer.seek(0)
-    return toc_buffer
+    toc_mem_buffer.seek(0)
+    return toc_mem_buffer
 
 # 1. Calculer les pages de début "provisoires" (en supposant 1 page de sommaire)
 section_start_pages = []
@@ -120,6 +120,5 @@ for pdf_path in pdf_files[1:]:
 merger.write(output_pdf)
 merger.close()
 
-print(
-    f"\n✅ Fusion terminée avec cover en page 1, sommaire en page 2, et signets corrects : {output_pdf}"
-)
+print("\n✅ Fusion terminée avec cover en page 1, sommaire en page 2,")
+print(f"et signets corrects : {output_pdf}")
