@@ -1,0 +1,37 @@
+# Fichiers Python compilés
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Dossiers virtuels
+.env/
+.venv/
+env/
+venv/
+ENV/
+VENV/
+
+# Fichiers de configuration d'IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Fichiers de logs
+*.log
+
+# Fichiers PDF générés
+*.pdf
+/output/
+
+# Fichiers temporaires
+*.tmp
+*.bak
+
+# Fichiers Poetry
+poetry.lock
+
+# Fichiers système
+.DS_Store
+Thumbs.db

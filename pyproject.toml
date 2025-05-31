@@ -1,0 +1,29 @@
+[project]
+name = "merge-pdf-with-toc"
+version = "1.0.0"
+description = "Fusionne des PDFs avec sommaire paginé et signets cliquables, configuration via config.toml"
+authors = [
+    { name="VotreNom", email="votre.email@example.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://github.com/votre-utilisateur/merge-pdf-with-toc"
+
+[tool.setuptools]
+packages = [""]
+
+[project.optional-dependencies]
+dev = []
+
+[tool.poetry.dependencies]
+python = "^3.8"
+PyPDF2 = "^3.0.0"
+reportlab = "^4.0.0"
+toml = "^0.10.2"
+
+[tool.merge_pdf_with_toc.config]
+input_folder = "E:/Guitare - Webrip/Paetreon tiefsaiter/tabs"
+output_folder = "E:/Guitare - Webrip/Paetreon tiefsaiter/tabs/output"
+output_file = "FusionFinale.pdf"

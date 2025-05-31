@@ -10,7 +10,12 @@ from reportlab.pdfbase.ttfonts import TTFont
 # Charger la configuration depuis config.toml
 config = toml.load("config.toml")
 pdf_folder = config["pdf"]["input_folder"]
-output_pdf = config["pdf"]["output_file"]
+output_folder = config["pdf"]["output_folder"]
+output_file = config["pdf"]["output_file"]
+
+# Créer le dossier de sortie s'il n'existe pas
+os.makedirs(output_folder, exist_ok=True)
+output_pdf = os.path.join(output_folder, output_file)
 
 # Supprimer le fichier résultat s'il existe déjà
 if os.path.exists(output_pdf):
@@ -105,11 +110,9 @@ merger.append(toc_reader)
 merger.add_outline_item("Table of content", 1, italic=True)  # 1 = deuxième page, italique
 
 # Les autres PDFs (signets normaux)
-current_page = 1 + toc_pages
 for pdf_path in pdf_files[1:]:
     bookmark_name = os.path.splitext(os.path.basename(pdf_path))[0]
     merger.append(pdf_path, outline_item=bookmark_name)
-    current_page += len(PdfReader(pdf_path).pages)
 
 # Sauvegarder le PDF fusionné
 merger.write(output_pdf)
