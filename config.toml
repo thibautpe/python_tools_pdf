@@ -1,4 +1,4 @@
 [pdf]
-input_folder  = "E:/Guitare - Webrip/Paetreon tiefsaiter/tabs"
-output_folder = "E:/Guitare - Webrip/Paetreon tiefsaiter/tabs/output"
-output_file   = "FusionFinale.pdf"
+input_folder  = "E:/work/pdf"
+output_folder = "E:/work/pdf/out"
+output_file   = "mergedpdf.pdf"
