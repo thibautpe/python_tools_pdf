@@ -30,9 +30,8 @@ jobs:
         pylint merge_and_toc_pdf.py
 
     - name: Lister tous les fichiers du projet
-      run: |
-        dir /s
-        
+      run: dir . /s
+
     - name: Vérifier les fichiers de test
       run: dir test\data
       
