@@ -79,10 +79,10 @@ def generate_toc(start_pages):
 
 # 1. Calculer les pages de début "provisoires" (en supposant 1 page de sommaire)
 section_start_pages = []
-current_page = 2  # 1 = cover, 2 = sommaire (provisoire)
+CURRENT_PAGE = 2  # 1 = cover, 2 = sommaire (provisoire)
 for count in pdf_page_counts:
-    section_start_pages.append(current_page + 1)
-    current_page += count
+    section_start_pages.append(CURRENT_PAGE + 1)
+    CURRENT_PAGE += count
 
 # 2. Générer le sommaire provisoire et obtenir le vrai nombre de pages du sommaire
 toc_buffer = generate_toc(section_start_pages)
@@ -91,10 +91,10 @@ toc_pages = len(toc_reader.pages)
 
 # 3. Recalculer les pages de début avec le vrai nombre de pages du sommaire
 section_start_pages = []
-current_page = 1 + toc_pages  # 1 = cover, puis sommaire
+CURRENT_PAGE = 1 + toc_pages  # 1 = cover, puis sommaire
 for count in pdf_page_counts:
-    section_start_pages.append(current_page + 1)
-    current_page += count
+    section_start_pages.append(CURRENT_PAGE + 1)
+    CURRENT_PAGE += count
 
 # 4. Générer le sommaire définitif avec les bons numéros de pages
 toc_buffer = generate_toc(section_start_pages)
