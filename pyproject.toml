@@ -24,6 +24,6 @@ reportlab = "^4.0.0"
 toml = "^0.10.2"
 
 [tool.merge_pdf_with_toc.config]
-input_folder = "E:/Guitare - Webrip/Paetreon tiefsaiter/tabs"
-output_folder = "E:/Guitare - Webrip/Paetreon tiefsaiter/tabs/output"
-output_file = "FusionFinale.pdf"
+input_folder = "E:/work/merge_pdf"
+output_folder = "E:/work/merge_pdf/out"
+output_file = "mergedpdf.pdf"
