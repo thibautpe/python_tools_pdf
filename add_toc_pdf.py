@@ -26,33 +26,74 @@ pdf_files = sorted([
     if f.lower().endswith(".pdf")
 ])
 
-# Génération du sommaire (avec ReportLab)
-toc_titles = []
+# Calculer le nombre de pages de chaque PDF (hors cover)
+pdf_page_counts = []
 for pdf_path in pdf_files[1:]:
-    bookmark_name = os.path.splitext(os.path.basename(pdf_path))[0]
-    toc_titles.append(bookmark_name)
+    reader = PdfReader(pdf_path)
+    pdf_page_counts.append(len(reader.pages))
 
-toc_buffer = BytesIO()
-c = canvas.Canvas(toc_buffer, pagesize=A4)
-def create_toc_header():
-    c.setFont("Verdana-Bold", 18)
-    c.drawString(180, 800, "Table of content")
-    c.setFont("Verdana", 12)
-    return 760
-y = create_toc_header()
-items_per_page = 35
-current_item = 0
-right_margin = 500
-for title in toc_titles:
-    if current_item >= items_per_page:
-        c.showPage()
-        y = create_toc_header()
-        current_item = 0
-    c.drawString(100, y, title)
-    y -= 20
-    current_item += 1
-c.save()
-toc_buffer.seek(0)
+# Calculer la page de début de chaque section (dans le PDF final)
+toc_start_page = 2  # 1 = cover, 2 = sommaire (première page du sommaire)
+toc_total_pages = 1  # sera mis à jour après la génération du sommaire
+section_start_pages = []
+current_page = toc_start_page + 1  # première page après le sommaire
+for count in pdf_page_counts:
+    section_start_pages.append(current_page)
+    current_page += count
+
+# 1. Générer la liste des titres pour le sommaire (hors cover)
+toc_titles = [
+    os.path.splitext(os.path.basename(f))[0]
+    for f in pdf_files[1:]
+]
+
+# 2. Générer un sommaire "provisoire" pour estimer le nombre de pages du sommaire
+def generate_toc(section_start_pages):
+    toc_buffer = BytesIO()
+    c = canvas.Canvas(toc_buffer, pagesize=A4)
+    def create_toc_header():
+        c.setFont("Verdana-Bold", 18)
+        c.drawString(180, 800, "Table of content")
+        c.setFont("Verdana", 12)
+        return 760
+    y = create_toc_header()
+    items_per_page = 35
+    current_item = 0
+    for idx, title in enumerate(toc_titles):
+        if current_item >= items_per_page:
+            c.showPage()
+            y = create_toc_header()
+            current_item = 0
+        c.drawString(100, y, title)
+        page_number = section_start_pages[idx]
+        c.drawRightString(500, y, str(page_number))
+        y -= 20
+        current_item += 1
+    c.save()
+    toc_buffer.seek(0)
+    return toc_buffer
+
+# 3. Calculer les pages de début "provisoires" (en supposant 1 page de sommaire)
+section_start_pages = []
+current_page = 2  # 1 = cover, 2 = sommaire (provisoire)
+for count in pdf_page_counts:
+    section_start_pages.append(current_page + 1)
+    current_page += count
+
+# 4. Générer le sommaire provisoire et obtenir le vrai nombre de pages du sommaire
+toc_buffer = generate_toc(section_start_pages)
+toc_reader = PdfReader(toc_buffer)
+toc_pages = len(toc_reader.pages)
+
+# 5. Recalculer les pages de début avec le vrai nombre de pages du sommaire
+section_start_pages = []
+current_page = 1 + toc_pages  # 1 = cover, puis sommaire
+for count in pdf_page_counts:
+    section_start_pages.append(current_page + 1)
+    current_page += count
+
+# 6. Générer le sommaire définitif avec les bons numéros de pages
+toc_buffer = generate_toc(section_start_pages)
 toc_reader = PdfReader(toc_buffer)
 toc_pages = len(toc_reader.pages)
 
