@@ -1,9 +1,11 @@
+"""Fusionne des PDFs avec sommaire paginé et signets cliquables, configuration via config.toml."""
+
 import os
+from io import BytesIO
 import toml
 from PyPDF2 import PdfMerger, PdfReader
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
-from io import BytesIO
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
@@ -118,4 +120,6 @@ for pdf_path in pdf_files[1:]:
 merger.write(output_pdf)
 merger.close()
 
-print(f"\n✅ Fusion terminée avec cover en page 1, sommaire en page 2, et signets corrects : {output_pdf}")
+print(
+    f"\n✅ Fusion terminée avec cover en page 1, sommaire en page 2, et signets corrects : {output_pdf}"
+)
