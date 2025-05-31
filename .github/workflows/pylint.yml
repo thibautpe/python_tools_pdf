@@ -30,7 +30,7 @@ jobs:
         pylint merge_and_toc_pdf.py
 
     - name: Vérifier les fichiers de test
-      run: dir tests\data
+      run: dir test\data
       
     # - name: Run PDF merge script
     #   run: python merge_and_toc_pdf.py
