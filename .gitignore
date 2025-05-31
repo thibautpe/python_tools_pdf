@@ -21,9 +21,9 @@ VENV/
 # Fichiers de logs
 *.log
 
-# Fichiers PDF générés
+# Ignore tous les PDF SAUF ceux du dossier test/data
 *.pdf
-/output/
+!test/data/*.pdf
 
 # Fichiers temporaires
 *.tmp
