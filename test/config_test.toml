@@ -1,0 +1,4 @@
+[config]
+input_folder = "test/data"
+output_folder = "test/data/out"
+output_file = "mergedpdf.pdf"

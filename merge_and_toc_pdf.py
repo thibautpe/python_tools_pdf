@@ -1,6 +1,7 @@
 """Fusionne des PDFs avec sommaire paginé et signets cliquables, configuration via config.toml."""
 
 import os
+import sys
 from io import BytesIO
 import toml
 from PyPDF2 import PdfMerger, PdfReader
@@ -10,7 +11,9 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 # Charger la configuration depuis config.toml
-config = toml.load("config.toml")
+config_path = sys.argv[1] if len(sys.argv) > 1 else "config.toml"
+config = toml.load(config_path)
+
 pdf_folder = config["pdf"]["input_folder"]
 output_folder = config["pdf"]["output_folder"]
 output_file = config["pdf"]["output_file"]
