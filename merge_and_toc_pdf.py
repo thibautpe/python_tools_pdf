@@ -123,5 +123,5 @@ for pdf_path in pdf_files[1:]:
 merger.write(output_pdf)
 merger.close()
 
-print("\n✅ Fusion terminée avec cover en page 1, sommaire en page 2,")
+print("\nFusion terminée avec cover en page 1, sommaire en page 2,")
 print(f"et signets corrects : {output_pdf}")
